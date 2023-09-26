@@ -1,0 +1,66 @@
+#include <iostream>
+#include <vector>
+
+enum CmdType {
+    INVALID = -1,
+    INTERRUPT = 1, // 00001
+    MOTION = 2, // 00010
+    TOOLING = 4, // 00100
+    REQUEST = 8, // 01000
+};
+
+std::ostream &operator<<(std::ostream &os, CmdType const &type) {
+    switch (type) {
+        case CmdType::INTERRUPT:
+            os << "INTERRUPT";
+            break;
+        case CmdType::MOTION:
+            os << "MOTION";
+            break;
+        case CmdType::TOOLING:
+            os << "TOOLING";
+            break;
+        case CmdType::REQUEST:
+            os << "REQUEST";
+            break;
+        default:
+            os << "INVALID";
+            break;
+    }
+    return os;
+}
+
+   std::string toStr(int bitmask) {
+        
+        std::string str;
+       
+        std::cout << "toStr Bitmask: " << bitmask << std::endl;
+        if (bitmask & (1 << CmdType::INTERRUPT)) {
+                str += "INTERRUPT |";
+            }
+
+        if (bitmask & (1 << CmdType::MOTION)) {
+                str += "MOTION |";
+            }
+
+        if (bitmask & (1 << CmdType::TOOLING)) {
+                str += "TOOLING |";
+            }
+
+        if (bitmask & (1 << CmdType::REQUEST)) {
+                str += "REQUEST |";
+            }
+        return str;
+    }
+
+
+
+int main() {
+    // Define two bitmasks
+    //int bitmask1 = 0b11011010;  // Binary representation: 11011010
+    int bitmask = 0;
+    bitmask |= (1 << CmdType::MOTION);
+    bitmask |= (1 << CmdType::INTERRUPT);
+    
+    std::cout << CmdType::REQUEST << " " <<  toStr(bitmask) << std::endl;
+}
